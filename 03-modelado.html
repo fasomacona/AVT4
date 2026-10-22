@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.3 Modelado de datos | GAD-2401</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Tema 4: Análisis y visualización de datos</h1>
+      <p>4.3 Modelado de datos con Power BI</p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="index.html">Inicio</a>
+      <a href="01-organizacion.html">1. Organización</a>
+      <a href="02-etl-powerbi.html">2. ETL</a>
+      <a href="03-modelado.html" class="active">3. Modelado</a>
+      <a href="04-informes.html">4. Informes</a>
+      <a href="05-proyecto.html">5. Proyecto</a>
+      <a href="ejercicios/ejercicios-manuales.html">Ejercicios</a>
+    </div>
+  </nav>
+
+  <main>
+    <h2>4.3.1 Conceptos del modelo tabular</h2>
+    <p>
+      Power BI usa un <strong>modelo en estrella (star schema)</strong> idealmente:
+    </p>
+    <ul>
+      <li><strong>Tablas de hechos:</strong> eventos medibles (ventas, tickets, movimientos) con claves y métricas.</li>
+      <li><strong>Tablas de dimensión:</strong> contexto (producto, cliente, fecha, región, empleado).</li>
+      <li><strong>Relaciones:</strong> normalmente 1:* desde dimensión hacia hecho; dirección de filtro controlada.</li>
+    </ul>
+    <div class="card highlight">
+      <strong>Tabla de fechas (Date/Calendar):</strong> imprescindible para inteligencia de tiempo
+      (YTD, mismo periodo del año anterior, etc.). Debe ser continua y marcada como tabla de fechas.
+    </div>
+
+    <h2>4.3.2 Expresiones de análisis de datos (DAX)</h2>
+    <p>
+      <strong>DAX</strong> (Data Analysis Expressions) calcula columnas, medidas y tablas.
+      La diferencia clave:
+    </p>
+    <table>
+      <thead>
+        <tr><th>Objeto</th><th>Cuándo se calcula</th><th>Uso típico</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Columna calculada</td><td>Al procesar el modelo (fila a fila)</td><td>Clasificaciones, claves auxiliares</td></tr>
+        <tr><td><strong>Medida</strong></td><td>Al interactuar con el informe (contexto de filtro)</td><td>KPIs: suma, promedio, % , YTD</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Medidas básicas (ejemplos)</h3>
+    <pre style="background:#f4f4f5;padding:1rem;border-radius:8px;overflow-x:auto;">Ventas = SUM( Hechos[Importe] )
+
+Ventas LY = CALCULATE( [Ventas], SAMEPERIODLASTYEAR( 'Fecha'[Fecha] ) )
+
+% Var = DIVIDE( [Ventas] - [Ventas LY], [Ventas LY] )</pre>
+
+    <h3>Contexto de filtro</h3>
+    <p>
+      Las medidas responden al contexto de los visuales (segmentadores, filas de una matriz, etc.).
+      Funciones como <code>CALCULATE</code>, <code>FILTER</code>, <code>ALL</code>, <code>REMOVEFILTERS</code>
+      modifican ese contexto.
+    </p>
+
+    <h2>4.3.3 Optimización del rendimiento</h2>
+    <ul>
+      <li>Preferir <strong>medidas</strong> frente a columnas calculadas pesadas.</li>
+      <li>Reducir cardinalidad (menos valores únicos innecesarios).</li>
+      <li>Evitar relaciones bidireccionales salvo necesidad justificada.</li>
+      <li>Tipos de datos compactos; quitar columnas no usadas.</li>
+      <li>Variables (<code>VAR</code>) en DAX para legibilidad y a veces rendimiento.</li>
+      <li>Analizar con <em>Performance Analyzer</em> en Power BI Desktop.</li>
+    </ul>
+
+    <div class="card warning">
+      <strong>Error frecuente:</strong> poner todas las tablas “sueltas” sin relaciones, o crear una sola
+      tabla plana enorme. El modelo en estrella simplifica DAX y mejora el rendimiento.
+    </div>
+
+    <p style="margin-top:2rem;">
+      <a class="btn btn-outline" href="02-etl-powerbi.html">← Anterior</a>
+      <a class="btn" href="04-informes.html">Siguiente: Informes →</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>Material generado para la asignatura GAD-2401 · Uso educativo</p>
+  </footer>
+</body>
+</html>

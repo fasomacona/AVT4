@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.5 Proyecto final | GAD-2401</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Tema 4: Análisis y visualización de datos</h1>
+      <p>4.5 Proyecto final y evaluación</p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="index.html">Inicio</a>
+      <a href="01-organizacion.html">1. Organización</a>
+      <a href="02-etl-powerbi.html">2. ETL</a>
+      <a href="03-modelado.html">3. Modelado</a>
+      <a href="04-informes.html">4. Informes</a>
+      <a href="05-proyecto.html" class="active">5. Proyecto</a>
+      <a href="ejercicios/ejercicios-manuales.html">Ejercicios</a>
+    </div>
+  </nav>
+
+  <main>
+    <h2>Objetivo del proyecto</h2>
+    <p>
+      Desarrollar de extremo a extremo un caso de análisis organizacional:
+      datos → Power Query → modelo → medidas DAX → informe Power BI → conclusiones.
+    </p>
+
+    <h2>Alcance mínimo sugerido</h2>
+    <ol>
+      <li><strong>Pregunta de negocio</strong> explícita (1 párrafo).</li>
+      <li>Al menos <strong>2 fuentes</strong> o 2 tablas que se combinen (hechos + dimensiones).</li>
+      <li>Limpieza documentada en Power Query (tipos, nulos, columnas).</li>
+      <li>Modelo en estrella con <strong>tabla de fechas</strong> y relaciones correctas.</li>
+      <li>Al menos <strong>5 medidas DAX</strong> (incluye una de inteligencia de tiempo si aplica).</li>
+      <li>Informe con <strong>3+ páginas</strong>: resumen ejecutivo, detalle, y una de análisis/exploración.</li>
+      <li>Conclusiones y limitaciones (correlación ≠ causalidad cuando corresponda).</li>
+    </ol>
+
+    <h2>Ideas de dominio</h2>
+    <ul>
+      <li>Ventas retail (ticket, producto, tienda, fecha).</li>
+      <li>Soporte / helpdesk (tickets por prioridad, agente, SLA).</li>
+      <li>Educación (inscripciones, carrera, periodo).</li>
+      <li>Operaciones (defectos, turno, línea de producción).</li>
+      <li>Datasets públicos (INEGI, datos.gob.mx, Kaggle) adaptados al modelo estrella.</li>
+    </ul>
+
+    <h2>Entregables</h2>
+    <div class="card success">
+      <ul style="margin-bottom:0;">
+        <li>Archivo <code>.pbix</code> (Power BI Desktop).</li>
+        <li>Documento breve (2–4 páginas): pregunta, modelo (diagrama), medidas, hallazgos.</li>
+        <li>Presentación oral o video corto (opcional según rúbrica del docente).</li>
+        <li>Datos de origen o enlace + instrucciones de actualización.</li>
+      </ul>
+    </div>
+
+    <h2>Rúbrica orientativa</h2>
+    <table>
+      <thead>
+        <tr><th>Criterio</th><th>Peso sugerido</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Claridad de la pregunta de negocio</td><td>10 %</td></tr>
+        <tr><td>Calidad del ETL (Power Query)</td><td>20 %</td></tr>
+        <tr><td>Modelo y relaciones</td><td>20 %</td></tr>
+        <tr><td>Medidas DAX correctas y útiles</td><td>15 %</td></tr>
+        <tr><td>Diseño del informe (UX, accesibilidad básica)</td><td>20 %</td></tr>
+        <tr><td>Interpretación y limitaciones</td><td>15 %</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Cronograma sugerido (4 semanas)</h2>
+    <ol>
+      <li>Semana 1: pregunta, datos, boceto del modelo.</li>
+      <li>Semana 2: ETL + relaciones + primeras medidas.</li>
+      <li>Semana 3: informe completo y validación de números.</li>
+      <li>Semana 4: conclusiones, ensayo de presentación, entrega.</li>
+    </ol>
+
+    <div class="nota">
+      El notebook de práctica genera CSVs de ejemplo (hechos y dimensiones) para que puedas
+      importarlos a Power BI y seguir el flujo completo sin depender de una base externa.
+    </div>
+
+    <p style="margin-top:2rem;">
+      <a class="btn btn-outline" href="04-informes.html">← Anterior</a>
+      <a class="btn" href="ejercicios/ejercicios-manuales.html">Ir a Ejercicios →</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>Material generado para la asignatura GAD-2401 · Uso educativo</p>
+  </footer>
+</body>
+</html>

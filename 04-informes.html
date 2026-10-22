@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.4 Informes en Power BI | GAD-2401</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Tema 4: Análisis y visualización de datos</h1>
+      <p>4.4 Analizar y visualizar datos con Power BI</p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="index.html">Inicio</a>
+      <a href="01-organizacion.html">1. Organización</a>
+      <a href="02-etl-powerbi.html">2. ETL</a>
+      <a href="03-modelado.html">3. Modelado</a>
+      <a href="04-informes.html" class="active">4. Informes</a>
+      <a href="05-proyecto.html">5. Proyecto</a>
+      <a href="ejercicios/ejercicios-manuales.html">Ejercicios</a>
+    </div>
+  </nav>
+
+  <main>
+    <h2>4.4.1 Creación de informes</h2>
+    <p>
+      Un informe combina páginas, visuales, filtros y medidas sobre el modelo.
+      Flujo recomendado:
+    </p>
+    <ol>
+      <li>Definir la historia: 1 pregunta principal por página.</li>
+      <li>Elegir KPIs (tarjetas) + 2–4 visuales de apoyo.</li>
+      <li>Añadir segmentadores (fecha, región, categoría).</li>
+      <li>Homogeneizar formato (tema, colores, tipografía).</li>
+      <li>Probar interacciones (clic en un visual filtra otros).</li>
+    </ol>
+
+    <h3>Visuales habituales</h3>
+    <table>
+      <thead>
+        <tr><th>Necesidad</th><th>Visual sugerido</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>KPI actual</td><td>Tarjeta / multi-row card</td></tr>
+        <tr><td>Tendencia en el tiempo</td><td>Línea o área</td></tr>
+        <tr><td>Comparar categorías</td><td>Barras / columnas</td></tr>
+        <tr><td>Composición</td><td>Barras apiladas (evitar exceso de pie charts)</td></tr>
+        <tr><td>Detalle</td><td>Tabla o matriz</td></tr>
+        <tr><td>Mapa geográfico</td><td>Mapa o Azure Maps</td></tr>
+      </tbody>
+    </table>
+
+    <h2>4.4.2 Navegación y accesibilidad</h2>
+    <ul>
+      <li><strong>Botones y marcadores:</strong> menú entre páginas, reset de filtros.</li>
+      <li><strong>Tooltips de página:</strong> detalle al pasar el cursor.</li>
+      <li><strong>Drill-through:</strong> de un resumen a una página de detalle.</li>
+      <li><strong>Accesibilidad:</strong> contraste suficiente, texto alternativo en visuales,
+        orden de tabulación, no depender solo del color.</li>
+      <li><strong>Móvil:</strong> vista de diseño para teléfono si el público lo usa.</li>
+    </ul>
+
+    <h2>4.4.3 Identificación de patrones y tendencias</h2>
+    <p>En el informe (y con el conocimiento de temas 2–3) se busca:</p>
+    <ul>
+      <li>Tendencias y quiebres de nivel en series temporales.</li>
+      <li>Estacionalidad (comparar mismo mes/día entre años).</li>
+      <li>Concentración (pocos clientes o productos dominan las ventas).</li>
+      <li>Anomalías (picos, caídas, valores fuera de rango).</li>
+      <li>Asociaciones entre segmentos (sin confundir con causalidad).</li>
+    </ul>
+    <div class="card highlight">
+      Power BI incluye visuales de <em>analytics</em> (línea de tendencia, pronóstico básico,
+      clustering en algunos gráficos). Úsalos como apoyo exploratorio, no como prueba causal.
+    </div>
+
+    <h2>Checklist de calidad de un informe</h2>
+    <ol>
+      <li>☐ Título y fecha de actualización visibles.</li>
+      <li>☐ Unidades y moneda claras.</li>
+      <li>☐ Filtros por defecto sensatos (p. ej. año actual).</li>
+      <li>☐ No más de un mensaje principal por página.</li>
+      <li>☐ Contraste y legibilidad en proyector.</li>
+      <li>☐ Prueba con un usuario no técnico.</li>
+    </ol>
+
+    <p style="margin-top:2rem;">
+      <a class="btn btn-outline" href="03-modelado.html">← Anterior</a>
+      <a class="btn" href="05-proyecto.html">Siguiente: Proyecto final →</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>Material generado para la asignatura GAD-2401 · Uso educativo</p>
+  </footer>
+</body>
+</html>

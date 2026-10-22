@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicios manuales | Tema 4 Power BI</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Tema 4: Análisis y visualización de datos</h1>
+      <p>Ejercicios manuales (cuaderno)</p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="../index.html">Inicio</a>
+      <a href="../01-organizacion.html">1. Organización</a>
+      <a href="../02-etl-powerbi.html">2. ETL</a>
+      <a href="../03-modelado.html">3. Modelado</a>
+      <a href="../04-informes.html">4. Informes</a>
+      <a href="../05-proyecto.html">5. Proyecto</a>
+      <a href="ejercicios-manuales.html" class="active">Ejercicios</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="card warning">
+      <p style="margin-bottom:0;">
+        Responde en el cuaderno. Varios ejercicios se completan después en Power BI Desktop.
+      </p>
+    </div>
+
+    <h2>Ejercicio 1 – Pregunta de negocio</h2>
+    <p>Elige un dominio (ventas, tickets, escuela u otro). Escribe:</p>
+    <ol>
+      <li>La decisión que el informe debe apoyar.</li>
+      <li>2–3 KPIs con definición exacta (fórmula en palabras).</li>
+      <li>Quién es el usuario principal del tablero.</li>
+    </ol>
+
+    <h2>Ejercicio 2 – Diseño de modelo estrella</h2>
+    <p>Para un negocio de tienda en línea con: pedidos, líneas de pedido, productos, clientes y fechas.</p>
+    <ol>
+      <li>Dibuja el esquema en estrella (hechos vs dimensiones).</li>
+      <li>Indica la cardinalidad de cada relación.</li>
+      <li>Lista 4 columnas que irían en la tabla de fechas.</li>
+    </ol>
+
+    <h2>Ejercicio 3 – Transformaciones Power Query</h2>
+    <p>Una hoja Excel tiene columnas: <code>FechaPedido</code>, <code>Cliente</code>, <code>Prod1_Cant</code>, <code>Prod1_Imp</code>, <code>Prod2_Cant</code>, <code>Prod2_Imp</code>.</p>
+    <ol>
+      <li>¿Qué problema tiene este diseño para el análisis?</li>
+      <li>Describe los pasos de transformación (incluido unpivot) para normalizarlo.</li>
+    </ol>
+
+    <h2>Ejercicio 4 – DAX en papel</h2>
+    <p>Escribe en seudocódigo o DAX aproximado:</p>
+    <ol>
+      <li>Medida de ventas totales.</li>
+      <li>Medida de ventas del año anterior (SAMEPERIODLASTYEAR).</li>
+      <li>Variación porcentual año contra año.</li>
+      <li>¿Por qué conviene una medida y no una columna calculada para el total de ventas?</li>
+    </ol>
+
+    <h2>Ejercicio 5 – Crítica de informe</h2>
+    <p>Un informe tiene 12 visuales en una sola página, 3 pasteles 3D, sin segmento de fecha y con colores rojo/verde como única distinción de estado.</p>
+    <ol>
+      <li>Lista 5 mejoras prioritarias.</li>
+      <li>Propón la estructura de 3 páginas para el mismo contenido.</li>
+    </ol>
+
+    <h2>Ejercicio 6 – Mini plan de proyecto</h2>
+    <p>En media página: título, pregunta, fuentes de datos, diagrama de modelo (texto) y lista de 5 medidas que implementarás en el .pbix.</p>
+
+    <div class="card success" style="margin-top:2rem;">
+      <a class="btn" href="../practica/practica_etl_y_proyecto.ipynb" download>Descargar notebook</a>
+      <a class="btn btn-outline" href="../index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>Material generado para la asignatura GAD-2401 · Uso educativo</p>
+  </footer>
+</body>
+</html>

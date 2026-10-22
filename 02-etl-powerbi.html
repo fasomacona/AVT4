@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.2 ETL con Power BI | GAD-2401</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Tema 4: Análisis y visualización de datos</h1>
+      <p>4.2 Extraer, transformar y cargar datos con Power BI</p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="index.html">Inicio</a>
+      <a href="01-organizacion.html">1. Organización</a>
+      <a href="02-etl-powerbi.html" class="active">2. ETL</a>
+      <a href="03-modelado.html">3. Modelado</a>
+      <a href="04-informes.html">4. Informes</a>
+      <a href="05-proyecto.html">5. Proyecto</a>
+      <a href="ejercicios/ejercicios-manuales.html">Ejercicios</a>
+    </div>
+  </nav>
+
+  <main>
+    <h2>¿Qué es ETL?</h2>
+    <p>
+      <strong>Extract – Transform – Load</strong>: extraer datos de orígenes, transformarlos
+      (limpiar, tipificar, combinar) y cargarlos al modelo analítico.
+      En Power BI, la herramienta central es <strong>Power Query</strong> (editor de consultas).
+    </p>
+
+    <h2>4.2.1 Fuentes de datos</h2>
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Ejemplos</th><th>Notas</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Archivos</td><td>Excel, CSV, JSON, XML, carpeta</td><td>Ideal para prácticas y prototipos</td></tr>
+        <tr><td>Bases de datos</td><td>SQL Server, PostgreSQL, MySQL, Oracle</td><td>Import o DirectQuery</td></tr>
+        <tr><td>Servicios en la nube</td><td>SharePoint, Dataverse, Azure, Google Analytics</td><td>Requieren credenciales</td></tr>
+        <tr><td>Web / API</td><td>Páginas HTML, REST</td><td>Útil para datos públicos</td></tr>
+      </tbody>
+    </table>
+    <div class="card highlight">
+      <strong>Import vs DirectQuery:</strong> Import copia datos al modelo (más rápido al interactuar);
+      DirectQuery consulta la fuente en vivo (datos frescos, más restricciones de rendimiento).
+    </div>
+
+    <h2>4.2.2 Transformación de datos</h2>
+    <p>Operaciones frecuentes en Power Query:</p>
+    <ul>
+      <li>Promover encabezados, cambiar tipos de datos.</li>
+      <li>Filtrar filas, quitar/renombrar columnas.</li>
+      <li>Reemplazar valores, dividir columnas, rellenar.</li>
+      <li>Despivotar (unpivot) para normalizar tablas “anchas”.</li>
+      <li>Combinar consultas: <strong>append</strong> (apilar) y <strong>merge</strong> (join).</li>
+      <li>Agrupar y agregar.</li>
+    </ul>
+    <p>
+      Cada paso se registra en el panel de <em>Pasos aplicados</em> (reproducible y auditable).
+      El lenguaje subyacente es <strong>M</strong>.
+    </p>
+
+    <h2>4.2.3 ETL avanzado</h2>
+    <ul>
+      <li><strong>Parámetros:</strong> rutas de archivo, fechas de corte, entornos (dev/prod).</li>
+      <li><strong>Funciones personalizadas:</strong> reutilizar la misma lógica en varias consultas.</li>
+      <li><strong>Carpeta de archivos:</strong> combinar muchos CSV/Excel con el mismo esquema.</li>
+      <li><strong>Consultas de referencia vs duplicadas:</strong> una base limpia y varias derivadas.</li>
+      <li><strong>Manejo de errores:</strong> tipos incorrectos, filas problemáticas, valores nulos.</li>
+      <li><strong>Actualización incremental</strong> (en el servicio Power BI, escenarios grandes).</li>
+    </ul>
+
+    <h2>Buenas prácticas de Power Query</h2>
+    <ol>
+      <li>Nombrar consultas y pasos con sentido de negocio.</li>
+      <li>Tipos de datos correctos <em>antes</em> de modelar.</li>
+      <li>Eliminar columnas innecesarias (menos memoria).</li>
+      <li>Evitar lógica de negocio compleja en M cuando pertenece a DAX o a la fuente.</li>
+      <li>Documentar orígenes y reglas de limpieza en el README del proyecto.</li>
+    </ol>
+
+    <div class="nota">
+      En el notebook de práctica se simula un mini-ETL con pandas (equivalente conceptual a Power Query)
+      y se exportan tablas listas para cargar en Power BI Desktop.
+    </div>
+
+    <p style="margin-top:2rem;">
+      <a class="btn btn-outline" href="01-organizacion.html">← Anterior</a>
+      <a class="btn" href="03-modelado.html">Siguiente: Modelado →</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>Material generado para la asignatura GAD-2401 · Uso educativo</p>
+  </footer>
+</body>
+</html>
