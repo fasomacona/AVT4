@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica 4 horas · Power BI | GAD-2401</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    .bloque { border-left: 4px solid var(--primary, #2563eb); padding-left: 1rem; margin: 1.5rem 0; }
+    .tiempo { display: inline-block; background: #1e293b; color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
+    .check li { margin: 0.35rem 0; }
+    .kpi-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin: 1rem 0; font-family: Consolas, monospace; font-size: 0.9rem; }
+    table.crono td:first-child { white-space: nowrap; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Práctica de Power BI — 4 horas</h1>
+      <p>GAD-2401 · Tema 4 · ETL · Modelo · DAX · Informes</p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="../index.html">Tema 4</a>
+      <a href="practica_4horas_powerbi.html" class="active">Práctica 4 h</a>
+      <a href="../ejercicios/ejercicios-manuales.html">Ejercicios</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="card highlight">
+      <h3 style="margin-top:0;">Objetivo de la práctica</h3>
+      <p style="margin-bottom:0;">
+        Construir de cero un archivo <strong>.pbix</strong> de ventas: cargar datos, limpiar en Power Query,
+        modelar en estrella, crear medidas DAX e interpretar un informe de 3 páginas.
+        Al terminar tendrás un entregable alineado con el <strong>proyecto del tema 4.5</strong>.
+      </p>
+    </div>
+
+    <h2>Materiales</h2>
+    <ul>
+      <li><strong>Power BI Desktop</strong> instalado
+        (<a href="https://powerbi.microsoft.com/desktop/" target="_blank">descarga oficial</a>).</li>
+      <li>Carpeta de datos de esta práctica: <code>practica/datos_ejemplo/</code>
+        <ul>
+          <li><code>hechos_ventas.csv</code></li>
+          <li><code>dim_producto.csv</code></li>
+          <li><code>dim_cliente.csv</code></li>
+          <li><code>dim_fecha.csv</code></li>
+          <li><code>ventas_sucias_muestra.csv</code> (opcional, reto ETL)</li>
+        </ul>
+      </li>
+      <li>Cuaderno o documento para anotar hallazgos (15 min finales).</li>
+    </ul>
+
+    <h2>Cronograma (240 minutos)</h2>
+    <table class="crono">
+      <thead>
+        <tr><th>Bloque</th><th>Duración</th><th>Actividad</th><th>Temario</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A</td><td>0:00 – 0:25</td><td>Contexto, pregunta de negocio, exploración de CSV</td><td>4.1</td></tr>
+        <tr><td>B</td><td>0:25 – 1:15</td><td>Power Query: cargar y transformar</td><td>4.2</td></tr>
+        <tr><td>C</td><td>1:15 – 2:15</td><td>Modelo estrella + medidas DAX</td><td>4.3</td></tr>
+        <tr><td>D</td><td>2:15 – 3:25</td><td>Informe de 3 páginas + interacción</td><td>4.4</td></tr>
+        <tr><td>E</td><td>3:25 – 4:00</td><td>Validación, hallazgos, cierre y entrega</td><td>4.5</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <!-- BLOQUE A -->
+    <div class="bloque">
+      <h2><span class="tiempo">Bloque A · 25 min</span> Pregunta de negocio y datos</h2>
+      <h3>A1. Pregunta (10 min)</h3>
+      <p>Escribe en tu cuaderno (no en Power BI todavía):</p>
+      <ol class="check">
+        <li>¿Qué decisión apoyará este informe? (ej. “priorizar categorías y regiones con mejor desempeño”)</li>
+        <li>Usuario principal: ¿gerente comercial, dueño de tienda, dirección?</li>
+        <li>Tres KPIs en palabras: Ventas totales, Ticket promedio, Ventas por categoría/región.</li>
+      </ol>
+
+      <h3>A2. Explorar archivos (15 min)</h3>
+      <p>Abre los CSV en Excel o en un editor y responde:</p>
+      <ul>
+        <li>¿Qué tabla es de <strong>hechos</strong> y cuáles son <strong>dimensiones</strong>?</li>
+        <li>¿Qué columnas usarán para relacionar tablas? (claves)</li>
+        <li>¿La tabla de fechas cubre todo el rango de <code>hechos_ventas.Fecha</code>?</li>
+      </ul>
+      <div class="nota">
+        <strong>Valores de control</strong> (para validar al final; no los “fabricques” en DAX):
+        <div class="kpi-box">
+          Ventas totales ≈ $7,416,318.43<br>
+          Tickets (VentaID distintos) = 500<br>
+          Productos = 5 · Clientes = 20 · Fechas diarias 2024-01-01 → 2025-12-31
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE B -->
+    <div class="bloque">
+      <h2><span class="tiempo">Bloque B · 50 min</span> ETL con Power Query (4.2)</h2>
+      <h3>B1. Cargar datos (15 min)</h3>
+      <ol>
+        <li>Abre <strong>Power BI Desktop</strong> → guarda el archivo como <code>Practica_Ventas_GAD2401.pbix</code>.</li>
+        <li><strong>Obtener datos</strong> → Texto/CSV → carga uno por uno:
+          <code>hechos_ventas</code>, <code>dim_producto</code>, <code>dim_cliente</code>, <code>dim_fecha</code>.</li>
+        <li>En cada carga, revisa la vista previa y pulsa <strong>Transformar datos</strong> (abre el Editor de Power Query).</li>
+      </ol>
+
+      <h3>B2. Transformaciones mínimas obligatorias (25 min)</h3>
+      <p>Para <strong>cada consulta</strong>, en Power Query:</p>
+      <ol class="check">
+        <li>Nombre de consulta claro: <code>Hechos Ventas</code>, <code>Dim Producto</code>, <code>Dim Cliente</code>, <code>Dim Fecha</code>.</li>
+        <li>Primera fila como encabezado (si aplica).</li>
+        <li><strong>Tipos de datos:</strong>
+          <ul>
+            <li>IDs → Entero</li>
+            <li><code>Fecha</code> → Fecha</li>
+            <li><code>Importe</code>, <code>PrecioUnitario</code> → Decimal</li>
+            <li><code>Cantidad</code> → Entero</li>
+            <li>Textos → Texto</li>
+          </ul>
+        </li>
+        <li>En <code>Hechos Ventas</code>: verifica que no haya columnas basura; cuenta de filas ≈ 500.</li>
+        <li>En <code>Dim Fecha</code>: asegúrate de que <code>Fecha</code> sea tipo fecha y no haya duplicados.</li>
+      </ol>
+
+      <h3>B3. Cerrar y aplicar (5 min)</h3>
+      <p><strong>Cerrar y aplicar</strong>. Si hay errores de tipo, corrígelos antes de seguir.</p>
+
+      <h3>Reto opcional (si vas adelantado, +10 min)</h3>
+      <p>
+        Importa <code>ventas_sucias_muestra.csv</code>, localiza nulos en <code>Importe</code>,
+        rellénalos o elimina filas, elimina la columna <code>Notas</code> y documenta los pasos aplicados.
+        (No es obligatorio integrarla al modelo final.)
+      </p>
+    </div>
+
+    <!-- BLOQUE C -->
+    <div class="bloque">
+      <h2><span class="tiempo">Bloque C · 60 min</span> Modelo y DAX (4.3)</h2>
+      <h3>C1. Relaciones (20 min)</h3>
+      <p>Ve a la vista <strong>Modelo</strong> y crea:</p>
+      <table>
+        <thead><tr><th>Desde (1)</th><th>Hacia (*)</th></tr></thead>
+        <tbody>
+          <tr><td>Dim Producto [ProductoID]</td><td>Hechos Ventas [ProductoID]</td></tr>
+          <tr><td>Dim Cliente [ClienteID]</td><td>Hechos Ventas [ClienteID]</td></tr>
+          <tr><td>Dim Fecha [Fecha]</td><td>Hechos Ventas [Fecha]</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Cardinalidad: <strong>uno a varios</strong>.</li>
+        <li>Dirección del filtro: <strong>única</strong> (de dimensión a hechos).</li>
+        <li>Clic derecho en <code>Dim Fecha</code> → <strong>Marcar como tabla de fechas</strong> → columna <code>Fecha</code>.</li>
+      </ul>
+
+      <h3>C2. Medidas DAX (30 min)</h3>
+      <p>Crea una tabla vacía “_Medidas” (opcional) o define las medidas en Hechos. Mínimo:</p>
+      <pre style="background:#f1f5f9;padding:1rem;border-radius:8px;overflow-x:auto;">Ventas Totales = SUM( 'Hechos Ventas'[Importe] )
+
+Tickets = DISTINCTCOUNT( 'Hechos Ventas'[VentaID] )
+
+Ticket Promedio = DIVIDE( [Ventas Totales], [Tickets] )
+
+Cantidad Total = SUM( 'Hechos Ventas'[Cantidad] )
+
+Ventas Año Anterior =
+CALCULATE(
+    [Ventas Totales],
+    SAMEPERIODLASTYEAR( 'Dim Fecha'[Fecha] )
+)
+
+Var % Año =
+DIVIDE(
+    [Ventas Totales] - [Ventas Año Anterior],
+    [Ventas Año Anterior]
+)</pre>
+      <p>Formato: moneda en ventas; porcentaje en <code>Var % Año</code>.</p>
+
+      <h3>C3. Comprobación rápida (10 min)</h3>
+      <ul>
+        <li>Tarjeta con <code>[Ventas Totales]</code> ≈ <strong>$7,416,318</strong>.</li>
+        <li>Tarjeta con <code>[Tickets]</code> = <strong>500</strong>.</li>
+        <li>Si no cuadra, revisa tipos, filtros persistentes o relaciones inactivas.</li>
+      </ul>
+    </div>
+
+    <!-- BLOQUE D -->
+    <div class="bloque">
+      <h2><span class="tiempo">Bloque D · 70 min</span> Informe de 3 páginas (4.4)</h2>
+
+      <h3>Página 1 — Resumen ejecutivo (25 min)</h3>
+      <ul class="check">
+        <li>Título: “Desempeño de ventas — GAD-2401”.</li>
+        <li>3 tarjetas: Ventas Totales, Tickets, Ticket Promedio.</li>
+        <li>Gráfico de barras: Ventas por <code>Categoria</code> (Dim Producto).</li>
+        <li>Gráfico de barras o mapa de árbol: Ventas por <code>Region</code>.</li>
+        <li>Segmentador de <code>Anio</code> (y opcionalmente Trimestre).</li>
+      </ul>
+
+      <h3>Página 2 — Detalle comercial (25 min)</h3>
+      <ul class="check">
+        <li>Matriz: Región × Categoría con Ventas Totales.</li>
+        <li>Tabla de productos: Producto, Cantidad Total, Ventas Totales.</li>
+        <li>Segmentadores: Segmento, Región.</li>
+        <li>Ordena para ver top productos.</li>
+      </ul>
+
+      <h3>Página 3 — Tendencia temporal (20 min)</h3>
+      <ul class="check">
+        <li>Línea: Ventas Totales por Fecha (o por Mes/Año usando campos de Dim Fecha).</li>
+        <li>Columna/línea: comparación por Año si hay datos 2024 y 2025.</li>
+        <li>Tarjeta o gráfico con <code>[Var % Año]</code> (filtrando un año concreto).</li>
+        <li>Activa información sobre herramientas (tooltip) en al menos un visual.</li>
+      </ul>
+
+      <h3>Interacción y limpieza visual</h3>
+      <ul>
+        <li>Desactiva interacciones que confundan (Formato → Editar interacciones).</li>
+        <li>Colores consistentes; evita gráficos 3D y exceso de sectores.</li>
+        <li>Tamaño de fuente legible en proyector.</li>
+      </ul>
+    </div>
+
+    <!-- BLOQUE E -->
+    <div class="bloque">
+      <h2><span class="tiempo">Bloque E · 35 min</span> Validación, hallazgos y entrega (4.5)</h2>
+
+      <h3>E1. Validación (10 min)</h3>
+      <ul class="check">
+        <li>Totales coinciden con la caja de control del Bloque A.</li>
+        <li>Al filtrar una región, las tarjetas cambian de forma coherente.</li>
+        <li>No hay relación “muchos a muchos” accidental ni totales duplicados.</li>
+      </ul>
+
+      <h3>E2. Hallazgos escritos (15 min)</h3>
+      <p>En el cuaderno o un Word/PDF breve (media página):</p>
+      <ol>
+        <li>¿Qué categoría concentra más ventas?</li>
+        <li>¿Qué región destaca? ¿Alguna está muy por debajo?</li>
+        <li>¿Hay diferencia clara entre años (si aplica el filtro)?</li>
+        <li>Una limitación del análisis (datos sintéticos, sin costos de logística, correlación ≠ causalidad, etc.).</li>
+        <li>Una acción de negocio sugerida (hipótesis a validar, no “verdad absoluta”).</li>
+      </ol>
+
+      <h3>E3. Entrega (10 min)</h3>
+      <ul class="check">
+        <li>Archivo <code>Practica_Ventas_GAD2401.pbix</code>.</li>
+        <li>Notas de hallazgos (PDF o captura + texto).</li>
+        <li>Nombre del estudiante / equipo en la portada del informe (cuadro de texto).</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <h2>Rúbrica rápida de la práctica (4 h)</h2>
+    <table>
+      <thead>
+        <tr><th>Criterio</th><th>Puntos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ETL: tipos correctos y nombres claros</td><td>20</td></tr>
+        <tr><td>Modelo: 3 relaciones + tabla de fechas</td><td>20</td></tr>
+        <tr><td>DAX: ≥ 4 medidas correctas (incl. DIVIDE o time intelligence)</td><td>20</td></tr>
+        <tr><td>Informe: 3 páginas útiles y legibles</td><td>25</td></tr>
+        <tr><td>Hallazgos escritos y validación de totales</td><td>15</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Si algo falla (troubleshooting)</h2>
+    <table>
+      <thead><tr><th>Problema</th><th>Qué revisar</th></tr></thead>
+      <tbody>
+        <tr><td>Totales inflados</td><td>Relaciones mal definidas o duplicados en dimensiones</td></tr>
+        <tr><td>SAMEPERIODLASTYEAR en blanco</td><td>Tabla de fechas marcada; columna Fecha continua; filtro de año</td></tr>
+        <tr><td>No relaciona Fecha</td><td>Ambos lados tipo Fecha (no Fecha/Hora distinto)</td></tr>
+        <tr><td>CSV con caracteres raros</td><td>Origen del archivo UTF-8; en Power Query “Origen” → configuración regional</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card success" style="margin-top:2rem;">
+      <h3 style="margin-top:0;">Resultado esperado al cumplir las 4 horas</h3>
+      <p style="margin-bottom:0;">
+        Un <strong>.pbix</strong> funcional con modelo en estrella, medidas publicables y un informe
+        de tres páginas listo para presentar en 3–5 minutos, más una nota de hallazgos.
+        Esta práctica es la “versión condensada” del proyecto final del tema 4.5.
+      </p>
+    </div>
+
+    <p style="margin-top:1.5rem;">
+      <a class="btn btn-outline" href="../index.html">← Volver al tema 4</a>
+      <a class="btn" href="practica_etl_y_proyecto.ipynb" download>Notebook complementario</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>Práctica 4 horas · Power BI · GAD-2401 · Uso educativo</p>
+  </footer>
+</body>
+</html>
